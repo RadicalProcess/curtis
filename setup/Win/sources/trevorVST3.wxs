@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+    <Fragment>
+        <DirectoryRef Id="CommonFiles64Folder">
+            <Directory Id="DIR_VST3" Name="VST3" />
+        </DirectoryRef>
+    </Fragment>
+
+    <Fragment>
+        <DirectoryRef Id="DIR_VST3">
+            <Component Id="COMP_TREVOR_VST3" Win64="yes" Guid="E423DCE0-DD4B-4458-B967-B08093BE82DB">
+                <File Id="FILE_TREVOR_VST3" Name="trevor.vst3" KeyPath="yes" Checksum="yes" Source="..\..\..\bin\Win\trevor.vst3"/>
+                <RemoveFile Id="REMOVEFILE_TREVOR_VST3" Name="trevor.vst3" On="both" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+
+    <Fragment>
+        <Feature Id="FEATURE_VST3"
+                 Title="TREVOR VST3"
+                 Level="1"
+                 AllowAdvertise="no"
+                 ConfigurableDirectory="DIR_VST3"
+                 Description="TERVOR VST3 (64Bit)">
+            <ComponentRef Id="COMP_TREVOR_VST3" />
+        </Feature>
+    </Fragment>
+
+</Wix>

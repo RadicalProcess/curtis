@@ -1,0 +1,12 @@
+[submodule "dependencies/uicore"]
+	path = dependencies/uicore
+	url = https://github.com/RadicalProcess/uicore
+[submodule "dependencies/googletest"]
+	path = dependencies/googletest
+	url = https://github.com/google/googletest.git
+[submodule "dependencies/dsp"]
+	path = dependencies/dsp
+	url = https://github.com/RadicalProcess/dsp
+[submodule "dependencies/JUCE"]
+	path = dependencies/JUCE
+	url = https://github.com/juce-framework/JUCE.git

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="2">
+    <title>trevor</title>
+    <organization>Radical Process</organization>
+    <pkg-ref id="com.radical-process.trevorVst3">trevorVst3.pkg</pkg-ref>
+    <pkg-ref id="com.radical-process.trevorAU">trevorAU.pkg</pkg-ref>
+
+    <license file="gpl-3.0.rtf" mime-type="text/rtf"/>
+    <options customize="always" require-scripts="false" hostArchitectures="x86_64"/>
+
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="10.9"/>
+        </allowed-os-versions>
+    </volume-check>
+
+    <choices-outline>
+        <line choice="com.radical-process.trevorVst3"/>
+        <line choice="com.radical-process.trevorAU"/>
+    </choices-outline>
+
+    <choice id="com.radical-process.trevorVst3"
+        visible="true"
+        title="trevor VST3"
+        description="Installs the VST3 version of trevor.">
+        <pkg-ref id="com.radical-process.trevorVst3"/>
+    </choice>
+
+    <choice id="com.radical-process.trevorAU"
+        visible="true"
+        title="trevor AU"
+        description="Installs the Audio Unit version of trevor.">
+        <pkg-ref id="com.radical-process.trevorAU"/>
+    </choice>
+</installer-gui-script>

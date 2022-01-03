@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="trevor" Language="1033" Version="1.1.0" Manufacturer="Radical Process" UpgradeCode="1cdff30f-8e33-469b-a075-e95638dae1aa">
+		<Package Id='*' Keywords='Installer' Description="Plugin Installer" InstallerVersion="301" Compressed="yes" Platform="x64" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of trevor is already installed." />
+		<MediaTemplate EmbedCab="yes"/>
+
+        <UIRef Id="WixUI_Mondo" />
+        <UIRef Id="WixUI_ErrorProgressText" />
+
+        <WixVariable Id="WixUIBannerBmp" Value="banner.png" />
+        <WixVariable Id="WixUIDialogBmp" Value="background.png" />
+        
+        <WixVariable Id="WixUILicenseRtf" Value="gpl-3.0.rtf" />
+
+        
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFiles64Folder" />
+            <Directory Id="CommonFiles64Folder" />
+        </Directory>
+        
+		<Feature Id="Complete" Title="Complete" Level="1" Description="Installs all plugins formats." Display="expand">
+            <FeatureRef Id="FEATURE_VST3" />
+        </Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="trevor" />
+			</Directory>
+		</Directory>
+	</Fragment>
+</Wix>
