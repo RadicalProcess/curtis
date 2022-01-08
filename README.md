@@ -1,6 +1,4 @@
-# trevor
+# curtis
 
-![build status](https://github.com/RadicalProcess/trevor/actions/workflows/build.yml/badge.svg?branch=main)
 
-A waveset-distortion-based distortion effect plugin. The plugin detects the zero crosses of incoming audio signal, keep the intervals of them, and fill them with additively synthesized sinewave.
-
+A waveset segment glisson granulator. The plugin detects the zero crosses of incoming audio signal, segments it using the zero-crosses, and play them back in various manners.
