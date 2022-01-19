@@ -10,8 +10,6 @@ include(cmake/platforms.cmake)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/dependencies/dsp/capi)
 
-find_package(DSP)
-
 add_subdirectory(dependencies)
 add_subdirectory(engine)
 
