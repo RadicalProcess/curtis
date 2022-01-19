@@ -5,7 +5,7 @@
 #include <utility>
 #include "IEngine.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     inline
     size_t getHash(const std::string_view& str)

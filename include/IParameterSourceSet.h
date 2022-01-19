@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 
-namespace rp::trevor
+namespace rp::curts
 {
     class IParameterSourceSet
     {

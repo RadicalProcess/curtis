@@ -4,7 +4,7 @@
 
 #include <juce_audio_utils/juce_audio_utils.h>
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class ParameterSourceSet : public IParameterSourceSet
     {

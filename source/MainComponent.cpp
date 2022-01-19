@@ -3,7 +3,7 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 #include "ParameterSpecSet.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     using namespace juce;
 

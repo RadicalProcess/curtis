@@ -4,7 +4,7 @@
 #include "ParameterSync.h"
 #include "ParameterSource.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     StateSync::StateSync(juce::AudioProcessorValueTreeState& apvts, IParameterSetter& parameterSetter)
     {

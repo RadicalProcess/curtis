@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     PluginEditor::PluginEditor(PluginProcessor& pluginProcessor)
     : AudioProcessorEditor(&pluginProcessor)

@@ -9,7 +9,7 @@
 #include "IParameterSetter.h"
 #include "IFactory.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class ParameterSyncSet : public IParameterSync
     {

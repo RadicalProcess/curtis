@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include "ParameterSpec.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     extern const std::vector<ParameterSpec> parameterSpecSet;
 

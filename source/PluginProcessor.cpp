@@ -5,7 +5,7 @@
 #include "PluginEditor.h"
 #include "StateSync.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     namespace
     {
@@ -61,7 +61,7 @@ namespace rp::trevor
             const auto lock = std::lock_guard(mutex_);
 
         }
-        stateSync_ = std::make_unique<StateSync>(apvts_, *engineManager_);
+        stateSync_ = std::make_unique<StateSync>(apvts_, engine_);
     }
 
     bool PluginProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
@@ -125,5 +125,5 @@ namespace rp::trevor
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new rp::trevor::PluginProcessor();
+    return new rp::curtis::PluginProcessor();
 }

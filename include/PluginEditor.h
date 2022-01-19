@@ -3,7 +3,7 @@
 #include "PluginProcessor.h"
 #include "MainComponent.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class PluginEditor : public juce::AudioProcessorEditor
     {

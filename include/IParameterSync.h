@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class IParameterSync
     {

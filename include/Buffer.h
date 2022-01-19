@@ -2,7 +2,7 @@
 
 #include <cstddef>
 
-namespace rp::trevor
+namespace rp::curtis
 {
     enum class DownSampleMethod
     {

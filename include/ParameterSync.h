@@ -7,7 +7,7 @@
 #include "IParameterSetter.h"
 #include "ParameterSpec.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class ParameterSync : public IParameterSync
                         , public IParameterSource::Listener

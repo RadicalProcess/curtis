@@ -1,6 +1,6 @@
 #pragma once
 
-namespace rp::trevor
+namespace rp::curtis
 {
     struct Message
     {

@@ -10,7 +10,7 @@
 
 #include "IParameterSetter.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class MainComponent : public juce::Component
     {

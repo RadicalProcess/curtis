@@ -1,6 +1,6 @@
 #include "ParameterSource.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     ParameterSource::ParameterSource(juce::AudioProcessorValueTreeState& apvts, const std::string& parameterId)
     : apvts_(apvts)

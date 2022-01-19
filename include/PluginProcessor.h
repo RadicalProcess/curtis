@@ -6,10 +6,11 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
+#include "IEngine.h"
 #include "StateSync.h"
 #include "PresetManager.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class PluginProcessor : public juce::AudioProcessor
     {
@@ -72,6 +73,7 @@ namespace rp::trevor
 
         std::mutex mutex_;
         ParameterSyncPtr stateSync_;
+        EnginePtr engine_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginProcessor)
     };

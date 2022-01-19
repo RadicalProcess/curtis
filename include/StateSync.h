@@ -5,7 +5,7 @@
 #include "IParameterSetter.h"
 #include "IParameterSource.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class StateSync : public IParameterSync
     {

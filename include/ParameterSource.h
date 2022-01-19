@@ -6,7 +6,7 @@
 
 #include "IParameterSource.h"
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class ParameterSource : public IParameterSource
                           , public juce::AudioProcessorValueTreeState::Listener

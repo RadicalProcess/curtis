@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace rp::trevor
+namespace rp::curtis
 {
     class IParameterSource
     {
@@ -23,5 +23,5 @@ namespace rp::trevor
         virtual void removeListener(Listener* listener) = 0;
     };
 
-    using ParameterSourcePtr = std::unique_ptr<rp::trevor::IParameterSource>;
+    using ParameterSourcePtr = std::unique_ptr<rp::curtis::IParameterSource>;
 }
