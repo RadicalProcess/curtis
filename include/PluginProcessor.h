@@ -6,10 +6,7 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
-#include <engine/IEngineManager.h>
-#include <engine/Validator.h>
 
-#include "StateSync.h"
 #include "PresetManager.h"
 
 namespace rp::trevor
@@ -30,13 +27,9 @@ namespace rp::trevor
 
         void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
-        using AudioProcessor::processBlock;
-
-
         juce::AudioProcessorEditor* createEditor() override;
 
         bool hasEditor() const override;
-
 
         const juce::String getName() const override;
 
@@ -59,15 +52,11 @@ namespace rp::trevor
 
         void changeProgramName(int index, const juce::String& newName) override;
 
-
         void getStateInformation(juce::MemoryBlock& destData) override;
 
         void setStateInformation(const void* data, int sizeInBytes) override;
 
         juce::AudioProcessorValueTreeState& getAudioProcessorValueTreeState();
-
-        VisualizationData getVisualizationData(size_t channel) override;
-
 
     private:
 

@@ -130,12 +130,6 @@ namespace rp::trevor
     const juce::String PluginProcessor::getProgramName(int index ){ return presetManager_.getName(index);}
     void PluginProcessor::changeProgramName(int , const juce::String&){}
     void PluginProcessor::releaseResources(){}
-
-    VisualizationData PluginProcessor::getVisualizationData(size_t channel)
-    {
-        const auto lock = std::lock_guard(mutex_);
-        return engineManager_->getVisualizationData(channel);
-    }
 }
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

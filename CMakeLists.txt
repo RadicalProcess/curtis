@@ -11,7 +11,6 @@ include(cmake/platforms.cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/dependencies/dsp/capi)
 
 add_subdirectory(dependencies)
-add_subdirectory(engine)
 
 juce_add_plugin(curtis
     PLUGIN_MANUFACTURER_CODE RdiP
@@ -30,7 +29,6 @@ target_sources(curtis
         source/PluginProcessor.cpp
         source/ParameterSource.cpp
         source/StateSync.cpp
-        source/MainComponent.cpp
         )
 
 target_compile_definitions(curtis
@@ -42,7 +40,6 @@ target_compile_definitions(curtis
 target_link_libraries(curtis
     PRIVATE
         juce::juce_audio_utils
-        rp::Engine
         rp::UICore
     PUBLIC
         juce::juce_recommended_config_flags
