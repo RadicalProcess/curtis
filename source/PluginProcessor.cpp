@@ -1,7 +1,6 @@
 #include "PluginProcessor.h"
 
-#include <engine/ParameterSpecSet.h>
-#include <engine/EngineManager.h>
+#include "ParameterSpecSet.h"
 
 #include "PluginEditor.h"
 #include "StateSync.h"
@@ -53,10 +52,6 @@ namespace rp::trevor
 
     void PluginProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     {
-        validator_ = std::make_unique<Validator>(static_cast<float>(sampleRate), static_cast<size_t>(samplesPerBlock));
-        if(!validator_->isValid())
-            return;
-
         const auto channelCount = std::max(getTotalNumInputChannels(), getTotalNumOutputChannels());
         const auto factor = static_cast<int>(sampleRate / 22050.0);
         const auto timeout = factor * 1024;
@@ -64,9 +59,7 @@ namespace rp::trevor
 
         {
             const auto lock = std::lock_guard(mutex_);
-            engineManager_ = std::make_unique<EngineManager>(channelCount, timeout,
-                                                             static_cast<float>(sampleRate),
-                                                             static_cast<size_t>(samplesPerBlock));
+
         }
         stateSync_ = std::make_unique<StateSync>(apvts_, *engineManager_);
     }
@@ -82,10 +75,7 @@ namespace rp::trevor
 
     void PluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& )
     {
-        if(validator_->isValid())
-            engineManager_->process(buffer.getArrayOfWritePointers(), static_cast<size_t>(buffer.getNumSamples()));
-        else
-            buffer.clear();
+        engine_->process(buffer.getArrayOfWritePointers(), static_cast<size_t>(buffer.getNumSamples()));
     }
 
     bool PluginProcessor::hasEditor() const
@@ -131,11 +121,6 @@ namespace rp::trevor
     void PluginProcessor::changeProgramName(int , const juce::String&){}
     void PluginProcessor::releaseResources(){}
 
-    VisualizationData PluginProcessor::getVisualizationData(size_t channel)
-    {
-        const auto lock = std::lock_guard(mutex_);
-        return engineManager_->getVisualizationData(channel);
-    }
 }
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

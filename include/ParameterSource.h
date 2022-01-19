@@ -4,7 +4,7 @@
 
 #include <juce_audio_utils/juce_audio_utils.h>
 
-#include <engine/IParameterSource.h>
+#include "IParameterSource.h"
 
 namespace rp::trevor
 {

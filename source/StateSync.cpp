@@ -1,7 +1,7 @@
 #include "StateSync.h"
 
-#include <engine/ParameterSpecSet.h>
-#include <engine/ParameterSync.h>
+#include "ParameterSpecSet.h"
+#include "ParameterSync.h"
 #include "ParameterSource.h"
 
 namespace rp::trevor

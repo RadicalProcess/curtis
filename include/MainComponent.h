@@ -8,18 +8,14 @@
 #include <UICore/Label.h>
 #include <UICore/TextField.h>
 
-#include <engine/IParameterSetter.h>
-#include <engine/IVisualizationDataProvider.h>
-
-#include "LineVisibilityResponder.h"
-#include "LinePresenter.h"
+#include "IParameterSetter.h"
 
 namespace rp::trevor
 {
     class MainComponent : public juce::Component
     {
     public:
-        explicit MainComponent(juce::AudioProcessorValueTreeState& apvts, IVisualizationDataProvider& visualizationDataProvider);
+        explicit MainComponent(juce::AudioProcessorValueTreeState& apvts);
 
         void paint(juce::Graphics &) override;
 
@@ -27,9 +23,6 @@ namespace rp::trevor
 
     private:
         juce::AudioProcessorValueTreeState& apvts_;
-
-        Visualizer visualizerL_;
-        Visualizer visualizerR_;
 
         uicore::Label skipLabel_;
         uicore::StepSlider skipSlider_;
@@ -68,9 +61,6 @@ namespace rp::trevor
         const juce::AudioProcessorValueTreeState::SliderAttachment wetSliderAttachment_;
 
         juce::Image logoImage_;
-
-        LineVisibilityResponder lineVisibilityResponderL_, lineVisibilityResponderR_;
-        LinePresenter linePresenterL_, linePresenterR_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
     };

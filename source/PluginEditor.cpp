@@ -5,7 +5,7 @@ namespace rp::trevor
 {
     PluginEditor::PluginEditor(PluginProcessor& pluginProcessor)
     : AudioProcessorEditor(&pluginProcessor)
-    , mainComponent_(pluginProcessor.getAudioProcessorValueTreeState(), pluginProcessor)
+    , mainComponent_(pluginProcessor.getAudioProcessorValueTreeState())
     {
         setSize(835, 315);
         addAndMakeVisible(mainComponent_);

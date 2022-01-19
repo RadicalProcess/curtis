@@ -6,16 +6,12 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
-#include <engine/IEngineManager.h>
-#include <engine/Validator.h>
-
 #include "StateSync.h"
 #include "PresetManager.h"
 
 namespace rp::trevor
 {
     class PluginProcessor : public juce::AudioProcessor
-                          , public IVisualizationDataProvider
     {
     public:
         PluginProcessor();
@@ -66,18 +62,16 @@ namespace rp::trevor
 
         juce::AudioProcessorValueTreeState& getAudioProcessorValueTreeState();
 
-        VisualizationData getVisualizationData(size_t channel) override;
 
 
     private:
 
         juce::AudioProcessorValueTreeState apvts_;
-        EngineManagerPtr engineManager_;
-        ParameterSyncPtr stateSync_;
+
         PresetManager presetManager_;
-        std::unique_ptr<Validator> validator_;
 
         std::mutex mutex_;
+        ParameterSyncPtr stateSync_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginProcessor)
     };

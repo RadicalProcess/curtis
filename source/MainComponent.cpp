@@ -1,7 +1,7 @@
 #include "MainComponent.h"
 
 #include <juce_audio_utils/juce_audio_utils.h>
-#include <engine/ParameterSpecSet.h>
+#include "ParameterSpecSet.h"
 
 namespace rp::trevor
 {
@@ -32,10 +32,8 @@ namespace rp::trevor
         }
     }
 
-    MainComponent::MainComponent(juce::AudioProcessorValueTreeState& apvts, IVisualizationDataProvider& visualizationDataProvider)
+    MainComponent::MainComponent(juce::AudioProcessorValueTreeState& apvts)
     : apvts_(apvts)
-    , visualizerL_(0, visualizationDataProvider)
-    , visualizerR_(1, visualizationDataProvider)
     , skipLabel_("SKIP_LABEL", getParameterSpec("SKIP").name.data())
     , skipSlider_("SKIP_SLIDER", 0, 5)
     , skipSliderAttachment_(apvts_, getParameterSpec("SKIP").id.data(), skipSlider_)
@@ -63,19 +61,7 @@ namespace rp::trevor
     , wetLabel_("WET_LABEL", getParameterSpec("WET").name.data())
     , wetSlider_("WET_SLIDER", 0, getParameterSpec("WET").unit.data())
     , wetSliderAttachment_(apvts, getParameterSpec("WET").id.data(), wetSlider_)
-    , lineVisibilityResponderL_(thresholdSlider_, gateSlider_, visualizerL_)
-    , lineVisibilityResponderR_(thresholdSlider_, gateSlider_, visualizerR_)
-    , linePresenterL_(visualizerL_, apvts_)
-    , linePresenterR_(visualizerR_, apvts_)
     {
-        {
-            visualizerL_.setBounds(0, 0, 835, 100);
-            addAndMakeVisible(visualizerL_);
-        }
-        {
-            visualizerR_.setBounds(0, 100, 835, 100);
-            addAndMakeVisible(visualizerR_);
-        }
 
         {
             skipLabel_.setBounds(15, 205, 75, 20);
