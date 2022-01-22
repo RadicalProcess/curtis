@@ -25,11 +25,16 @@ target_include_directories(curtis PRIVATE include)
 
 target_sources(curtis
     PRIVATE
+        source/Engine.cpp
         source/PluginEditor.cpp
         source/PluginProcessor.cpp
         source/ParameterSource.cpp
+        source/ParameterSync.cpp
         source/StateSync.cpp
+        source/PresetManager.cpp
         source/MainComponent.cpp
+        source/ParameterSpecSet.cpp
+        source/Preset.cpp
         )
 
 target_compile_definitions(curtis

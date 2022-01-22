@@ -15,7 +15,7 @@ namespace rp::curtis
 
         int getSelection() const;
 
-        int getNumberOfPresents() const;
+        int getNumberOfPresets() const;
 
     private:
         juce::AudioProcessorValueTreeState& apvts_;

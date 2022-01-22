@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 namespace rp::curtis
 {
     class IParameterSetter
@@ -9,4 +11,6 @@ namespace rp::curtis
 
         virtual void setParameter(size_t id, float value) = 0;
     };
+
+    using ParameterSettterPtr = std::unique_ptr<IParameterSetter>;
 }

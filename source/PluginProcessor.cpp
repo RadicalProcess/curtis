@@ -61,7 +61,7 @@ namespace rp::curtis
             const auto lock = std::lock_guard(mutex_);
 
         }
-        stateSync_ = std::make_unique<StateSync>(apvts_, engine_);
+        stateSync_ = std::make_unique<StateSync>(apvts_,*engine_);
     }
 
     bool PluginProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
@@ -114,7 +114,7 @@ namespace rp::curtis
     bool PluginProcessor::producesMidi() const { return false; }
     bool PluginProcessor::isMidiEffect() const { return false; }
     double PluginProcessor::getTailLengthSeconds() const { return 0.0; }
-    int PluginProcessor::getNumPrograms(){ return presetManager_.getNumberOfPresents(); }
+    int PluginProcessor::getNumPrograms(){ return presetManager_.getNumberOfPresets(); }
     int PluginProcessor::getCurrentProgram(){ return presetManager_.getSelection(); }
     void PluginProcessor::setCurrentProgram(int index){ presetManager_.apply(index); }
     const juce::String PluginProcessor::getProgramName(int index ){ return presetManager_.getName(index);}
