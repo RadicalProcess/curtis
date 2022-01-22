@@ -3,38 +3,47 @@
 namespace rp::curtis
 {
     const std::vector<ParameterSpec> parameterSpecSet{
-            ParameterSpec{"skip", "SKIP", "", ParameterSpec::Int, 0.f, 5.f, 1.f,
+            ParameterSpec{"segment min", "SEGMENT_MIN", "ms", ParameterSpec::Float, 5.f, 100.f, 50.f,
                           [](IEngine& engine, float value){
                           }},
-            ParameterSpec{"min length", "MIN_LENGTH", "us", ParameterSpec::Float, 0.f, 5000.f, 0.f,
+            ParameterSpec{"repeat min", "REPEAT_MIN", "", ParameterSpec::Int, 0, 10, 0,
                           [](IEngine& engine, float us){
 
                           }},
-            ParameterSpec{"harmonic1", "HARMONIC1", "%", ParameterSpec::Float, 0.0f, 100.f, 100.f,
+            ParameterSpec{"repeat max", "REPEAT_MAX", "", ParameterSpec::Int, 0, 10, 0,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"harmonic2", "HARMONIC2", "%", ParameterSpec::Float, 0.0f, 100.f, 0.0f,
+            ParameterSpec{"random", "RANDOM", "", ParameterSpec::Int, 0.0f, 30.0f, 0,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"harmonic3", "HARMONIC3", "%", ParameterSpec::Float, 0.0f, 100.f, 0.0f,
+            ParameterSpec{"density", "DENSITY", "%", ParameterSpec::Float, 0.0f, 100.f, 100.f,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"harmonic4", "HARMONIC4", "%", ParameterSpec::Float, 0.0f, 100.f, 0.0f,
+            ParameterSpec{"glisson", "GLISSON", "", ParameterSpec::Bool,0.f, 1.f, 1.f,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"harmonic5", "HARMONIC5", "%", ParameterSpec::Float, 0.0f, 100.f, 0.0f,
+            ParameterSpec{"start pitch min", "START_PITCH_MIN", "semitone", ParameterSpec::Float, -24.0f, 24.0f, 0.0f,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"duty cycle", "DUTY_CYCLE", "%", ParameterSpec::Float, 5.f, 100.f, 100.f,
+            ParameterSpec{"start pitch max", "START_PITCH_MAX", "semitone", ParameterSpec::Float, -24.0f, 24.0f, 0.0f,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"threshold", "THRESHOLD", "%", ParameterSpec::Float, 0.f, 100.f, 0.f,
+            ParameterSpec{"end pitch min", "END_PITCH_MIN", "semitone", ParameterSpec::Float, -24.0f, 24.0f, 0.0f,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"boost", "BOOST", "%", ParameterSpec::Float, 0.f, 100.f, 0.f,
+            ParameterSpec{"end pitch max", "END_PITCH_MAX", "semitone", ParameterSpec::Float, -24.0f, 24.0f, 0.0f,
                           [](IEngine& engine, float percentage){
                           }},
-            ParameterSpec{"gate", "GATE", "%", ParameterSpec::Float, 0.f, 100.f, 0.f,
+            ParameterSpec{"start position left", "START_POSITION_LEFT", "", ParameterSpec::Float, -1.0f, 1.0f, 0.0f,
+                          [](IEngine& engine, float percentage){
+                          }},
+            ParameterSpec{"start position right", "START_POSITION_RIGHT", "", ParameterSpec::Float, -1.0f, 1.0f, 0.0f,
+                          [](IEngine& engine, float percentage){
+                          }},
+            ParameterSpec{"end position left", "END_POSITION_LEFT", "", ParameterSpec::Float, -1.0f, 1.0f, 0.0f,
+                          [](IEngine& engine, float percentage){
+                          }},
+            ParameterSpec{"end position right", "END_POSITION_RIGHT", "", ParameterSpec::Float, -1.0f, 1.0f, 0.0f,
                           [](IEngine& engine, float percentage){
                           }},
             ParameterSpec{"dry", "DRY", "dB", ParameterSpec::Float, -96.f, 6.f, -96.f,

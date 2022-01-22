@@ -21,6 +21,7 @@ namespace rp::curtis
         {
             Float,
             Int,
+            Bool
         };
 
         explicit ParameterSpec(std::string_view _name, std::string_view _id, std::string_view _unit, Type _type, float _min, float _max, float _init, std::function<void(IEngine&, float value)> _setter)

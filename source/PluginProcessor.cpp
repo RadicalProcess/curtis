@@ -35,6 +35,13 @@ namespace rp::curtis
                                                                          static_cast<int>(parameterSpec.init)));
                         break;
                     }
+                    case ParameterSpec::Bool:
+                    {
+                        layout.add(std::make_unique<AudioParameterBool>(parameterSpec.id.data(),
+                                                                       parameterSpec.name.data(),
+                                                                       parameterSpec.init > 0.0f));
+                        break;
+                    }
                     default:
                         throw std::out_of_range("no such type");
                 }
@@ -52,16 +59,6 @@ namespace rp::curtis
 
     void PluginProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     {
-        const auto channelCount = std::max(getTotalNumInputChannels(), getTotalNumOutputChannels());
-        const auto factor = static_cast<int>(sampleRate / 22050.0);
-        const auto timeout = factor * 1024;
-        setLatencySamples(samplesPerBlock + timeout * 2);
-
-        {
-            const auto lock = std::lock_guard(mutex_);
-
-        }
-        stateSync_ = std::make_unique<StateSync>(apvts_,*engine_);
     }
 
     bool PluginProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
@@ -75,7 +72,6 @@ namespace rp::curtis
 
     void PluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& )
     {
-        engine_->process(buffer.getArrayOfWritePointers(), static_cast<size_t>(buffer.getNumSamples()));
     }
 
     bool PluginProcessor::hasEditor() const
