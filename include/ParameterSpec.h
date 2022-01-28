@@ -3,7 +3,7 @@
 #include <string_view>
 #include <boost/functional/hash.hpp>
 #include <utility>
-#include "IEngine.h"
+#include <curtis_core/Curtis.h>
 
 namespace rp::curtis
 {
@@ -24,7 +24,8 @@ namespace rp::curtis
             Bool
         };
 
-        explicit ParameterSpec(std::string_view _name, std::string_view _id, std::string_view _unit, Type _type, float _min, float _max, float _init, std::function<void(IEngine&, float value)> _setter)
+        explicit ParameterSpec(std::string_view _name, std::string_view _id, std::string_view _unit, Type _type, float _min, float _max, float _init, std::function<void(
+                Curtis&, float value)> _setter)
         : name(_name)
         , id(_id)
         , unit(_unit)
@@ -44,6 +45,6 @@ namespace rp::curtis
         const float min;
         const float max;
         const float init;
-        const std::function<void(IEngine&, float value)> setter;
+        const std::function<void(Curtis&, float value)> setter;
     };
 }

@@ -1,9 +1,10 @@
 #include "PluginProcessor.h"
 
+#include <curtis_core/Buffer.h>
 #include "ParameterSpecSet.h"
-
 #include "PluginEditor.h"
 #include "StateSync.h"
+
 
 namespace rp::curtis
 {
@@ -57,8 +58,10 @@ namespace rp::curtis
     {
     }
 
-    void PluginProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
+    void PluginProcessor::prepareToPlay(double sampleRate, int )
     {
+        engineManager_ = std::make_unique<EngineManager>(sampleRate);
+        stateSync_ = std::make_unique<StateSync>(apvts_, *engineManager_);
     }
 
     bool PluginProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
@@ -72,11 +75,12 @@ namespace rp::curtis
 
     void PluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& )
     {
+        engineManager_->process(buffer.getArrayOfWritePointers(), static_cast<size_t>(buffer.getNumSamples()));
     }
 
     bool PluginProcessor::hasEditor() const
     {
-        return true; // (change this to false if you choose to not supply an editor)
+        return true;
     }
 
     juce::AudioProcessorEditor* PluginProcessor::createEditor()
@@ -116,7 +120,6 @@ namespace rp::curtis
     const juce::String PluginProcessor::getProgramName(int index ){ return presetManager_.getName(index);}
     void PluginProcessor::changeProgramName(int , const juce::String&){}
     void PluginProcessor::releaseResources(){}
-
 }
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

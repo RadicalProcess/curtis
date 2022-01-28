@@ -25,14 +25,13 @@ target_include_directories(curtis PRIVATE include)
 
 target_sources(curtis
     PRIVATE
-        source/Engine.cpp
+        source/EngineManager.cpp
         source/PluginEditor.cpp
         source/PluginProcessor.cpp
         source/ParameterSource.cpp
         source/ParameterSync.cpp
         source/StateSync.cpp
         source/PresetManager.cpp
-        source/MainComponent.cpp
         source/ParameterSpecSet.cpp
         source/Preset.cpp
         )
@@ -54,4 +53,4 @@ target_link_libraries(curtis
         juce::juce_recommended_warning_flags)
 
 target_compile_features(curtis PRIVATE cxx_std_17)
-target_link_libraries(curtis PRIVATE )
+target_link_libraries(curtis PRIVATE rp::CurtisCore)
