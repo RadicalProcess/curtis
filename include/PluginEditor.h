@@ -12,6 +12,8 @@
 
 #include "PluginProcessor.h"
 #include "IParameterSetter.h"
+#include "GlissonPresenter.h"
+#include "TogglePresenter.h"
 
 namespace rp::curtis
 {
@@ -34,15 +36,19 @@ namespace rp::curtis
         const juce::AudioProcessorValueTreeState::SliderAttachment segmentMinSliderAttachment_;
 
         uicore::Label randomLabel_;
-        uicore::StandardRotarySlider randomSlider_;
+        uicore::StepSlider randomSlider_;
         const juce::AudioProcessorValueTreeState::SliderAttachment randomSliderAttachment_;
 
         uicore::ToggleButton glissonToggle_;
+        const TogglePresenter togglePresenter_;
+
         uicore::Label glissonLabel_;
         uicore::glisson::Slider glissonSlider_;
+        const GlissonPresenter glissonPresenter_;
 
         uicore::Label repeatLabel_;
-        uicore::StandardRotarySlider repeatSlider_;
+        uicore::StepSlider repeatSlider_;
+        const juce::AudioProcessorValueTreeState::SliderAttachment repeatSliderAttachment_;
 
         uicore::Label dryLabel_;
         uicore::DecibelRotarySlider drySlider_;
@@ -51,7 +57,6 @@ namespace rp::curtis
         uicore::Label wetLabel_;
         uicore::DecibelRotarySlider wetSlider_;
         const juce::AudioProcessorValueTreeState::SliderAttachment wetSliderAttachment_;
-
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
     };

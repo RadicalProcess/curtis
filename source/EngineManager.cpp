@@ -5,8 +5,8 @@
 
 namespace rp::curtis
 {
-    EngineManager::EngineManager(float sampleRate)
-    : curtis_(std::make_unique<Curtis>(sampleRate))
+    EngineManager::EngineManager(float sampleRate, size_t blockSize)
+    : curtis_(std::make_unique<Curtis>(sampleRate, blockSize))
     {}
 
     void EngineManager::process(float** buffer, size_t size)

@@ -11,7 +11,7 @@ namespace rp::curtis
     class EngineManager : public IParameterSetter
     {
     public:
-        EngineManager(float sampleRate);
+        EngineManager(float sampleRate, size_t blockSize);
 
         void process(float** buffer, size_t size);
 

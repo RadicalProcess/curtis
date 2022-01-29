@@ -17,13 +17,16 @@ namespace rp::curtis
     , segmentMinSlider_("SEGMENT_MIN", 0, "ms")
     , segmentMinSliderAttachment_(apvts_, getParameterSpec("SEGMENT_MIN").id.data(), segmentMinSlider_)
     , randomLabel_("RANDOM", getParameterSpec("RANDOM").name.data())
-    , randomSlider_("RANDOM", 0)
+    , randomSlider_("RANDOM", 0, 30)
     , randomSliderAttachment_(apvts_, getParameterSpec("RANDOM").id.data(), randomSlider_)
     , glissonToggle_("GLISSON_TOGGLE")
+    , togglePresenter_(apvts_, glissonToggle_)
     , glissonLabel_("GLISSON", "glisson")
     , glissonSlider_()
-    , repeatLabel_("REPEAT", "repeat")
-    , repeatSlider_("REPEAT")
+    , glissonPresenter_(apvts_, glissonSlider_)
+    , repeatLabel_("REPEAT", getParameterSpec("REPEAT").name.data())
+    , repeatSlider_("REPEAT", 0, 10)
+    , repeatSliderAttachment_(apvts_, getParameterSpec("REPEAT").id.data(), repeatSlider_)
     , dryLabel_("DRY_LABEL", getParameterSpec("DRY").name.data())
     , drySlider_("DRY_SLIDER", 0, getParameterSpec("DRY").unit.data())
     , drySliderAttachment_(apvts_, getParameterSpec("DRY").id.data(), drySlider_)
@@ -43,7 +46,9 @@ namespace rp::curtis
         {
             segmentMinLabel_.setBounds(100, 102, 75, 20);
             addAndMakeVisible(segmentMinLabel_);
+            segmentMinSlider_.setSkewFactor(0.5f);
             segmentMinSlider_.setBounds(100, 125, 75, 80);
+            segmentMinSlider_.setRange(getParameterSpec("SEGMENT_MIN").min, getParameterSpec("SEGMENT_MIN").max);
             addAndMakeVisible(segmentMinSlider_);
         }
 

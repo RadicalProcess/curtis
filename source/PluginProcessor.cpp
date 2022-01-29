@@ -58,9 +58,9 @@ namespace rp::curtis
     {
     }
 
-    void PluginProcessor::prepareToPlay(double sampleRate, int )
+    void PluginProcessor::prepareToPlay(double sampleRate, int blockSize)
     {
-        engineManager_ = std::make_unique<EngineManager>(sampleRate);
+        engineManager_ = std::make_unique<EngineManager>(sampleRate, static_cast<size_t>(blockSize));
         stateSync_ = std::make_unique<StateSync>(apvts_, *engineManager_);
     }
 
