@@ -5,6 +5,14 @@ namespace rp::curtis
 {
     using namespace uicore::glisson;
 
+    namespace
+    {
+        float unnormalize(KnobId knobId, float value)
+        {
+            return knobId >= uicore::glisson::LeftA ? (value + 24.f) / 48.0f : (value + 1.0f) / 2.0f;
+        }
+    }
+
     GlissonPresenter::GlissonPresenter(juce::AudioProcessorValueTreeState& apvts, uicore::glisson::Slider& slider)
     : apvts_(apvts)
     , slider_(slider)
@@ -21,6 +29,10 @@ namespace rp::curtis
         for(const auto& entry : map_)
             apvts_.addParameterListener(entry.second, this);
         apvts_.addParameterListener("GLISSON", this);
+
+        slider_.setGlissonEnabled(apvts_.getParameter("GLISSON")->getValue() > 0.0f);
+        for(auto& entry: map_)
+            slider_.set(entry.first,  apvts_.getParameter(entry.second)->getValue());
     }
 
     GlissonPresenter::~GlissonPresenter()
@@ -45,10 +57,7 @@ namespace rp::curtis
         if(itr == map_.end())
             throw std::out_of_range("GlissonPresenter: no such parameter");
 
-        if(itr->first >= uicore::glisson::LeftA)
-            slider_.set(itr->first, (value + 24.f) / 48.0f);
-        else
-            slider_.set(itr->first, (value + 1.0f) / 2.0f );
+        slider_.set(itr->first, unnormalize(itr->first, value));
     }
 
     void GlissonPresenter::onSliderValueChanged(KnobId knobId, float value)

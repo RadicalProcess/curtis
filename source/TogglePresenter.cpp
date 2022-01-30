@@ -8,6 +8,9 @@ namespace rp::curtis
     {
         apvts_.addParameterListener("GLISSON", this);
         button_.addListener(this);
+
+        button_.setToggleState(apvts_.getParameter("GLOSSON")->getValue() > 0.0f, juce::NotificationType::dontSendNotification);
+
     }
 
     TogglePresenter::~TogglePresenter()
