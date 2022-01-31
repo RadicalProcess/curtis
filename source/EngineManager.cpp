@@ -2,12 +2,22 @@
 
 #include <memory>
 #include "ParameterSpecSet.h"
+#include "Consts.h"
 
 namespace rp::curtis
 {
-    EngineManager::EngineManager(float sampleRate, size_t blockSize)
-    : curtis_(std::make_unique<Curtis>(sampleRate, blockSize))
-    {}
+    EngineManager::EngineManager(float sampleRate, size_t blockSize, size_t visualizationCacheSize)
+    : visualizationDataSets_(Consts::visualizerDataSize, {0.f, 0.f, 0.f, 0.f, false})
+    , curtis_(std::make_unique<Curtis>(sampleRate, blockSize, visualizationCacheSize))
+    , visualizationDataCompressor_(Consts::visualizerDataSize)
+    {
+        curtis_->addListener(this);
+    }
+
+    EngineManager::~EngineManager()
+    {
+        curtis_->removeListener(this);
+    }
 
     void EngineManager::process(float** buffer, size_t size)
     {
@@ -33,5 +43,18 @@ namespace rp::curtis
                                     });
             itr->setter(*curtis_, message.value);
         });
+    }
+
+    const std::vector<VisualizationDataSet>& EngineManager::getVisualizationDataSets()
+    {
+        const std::lock_guard<std::mutex> lock(mutex_);
+        return visualizationDataSets_;
+    }
+
+    void EngineManager::onVisualizationDataCacheFilled(const std::vector<VisualizationDataSet>& cache)
+    {
+        visualizationDataCompressor_.compress(cache);
+        const std::lock_guard<std::mutex> lock(mutex_);
+        visualizationDataSets_ = visualizationDataCompressor_.getCompressed();
     }
 }

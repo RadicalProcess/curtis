@@ -1,5 +1,6 @@
-#include "PluginProcessor.h"
 #include "PluginEditor.h"
+
+#include "PluginProcessor.h"
 #include "ParameterSpecSet.h"
 
 namespace rp::curtis
@@ -10,6 +11,7 @@ namespace rp::curtis
     PluginEditor::PluginEditor(PluginProcessor& pluginProcessor)
     : juce::AudioProcessorEditor(pluginProcessor)
     , apvts_(pluginProcessor.getAudioProcessorValueTreeState())
+    , visualizer_(pluginProcessor)
     , inputMixLabel_("INPUT_MIN", getParameterSpec("INPUT_MIX").name.data())
     , inputMixSlider_("INPUT_MIX", 0, "")
     , inputMixSliderAttachment_(apvts_, getParameterSpec("INPUT_MIX").id.data(), inputMixSlider_)
@@ -35,6 +37,10 @@ namespace rp::curtis
     , wetSliderAttachment_(apvts_, getParameterSpec("WET").id.data(), wetSlider_)
     {
         setSize(648, 215);
+        {
+            visualizer_.setBounds(0, 0, 648, 100);
+            addAndMakeVisible(visualizer_);
+        }
 
         {
             inputMixLabel_.setBounds(15, 102, 75, 20);

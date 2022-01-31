@@ -9,7 +9,7 @@
 #include <UICore/TextField.h>
 #include <UICore/ToggleButton.h>
 #include <UICore/GlissonSlider/Slider.h>
-
+#include <visualizer/Visualizer.h>
 #include "PluginProcessor.h"
 #include "IParameterSetter.h"
 #include "GlissonPresenter.h"
@@ -26,6 +26,8 @@ namespace rp::curtis
         void paint(juce::Graphics& g) override;
 
         juce::AudioProcessorValueTreeState& apvts_;
+
+        Visualizer visualizer_;
 
         uicore::Label inputMixLabel_;
         uicore::CenterDefaultRotarySlider inputMixSlider_;

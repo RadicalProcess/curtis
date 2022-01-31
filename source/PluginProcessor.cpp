@@ -4,7 +4,7 @@
 #include "ParameterSpecSet.h"
 #include "PluginEditor.h"
 #include "StateSync.h"
-
+#include "Consts.h"
 
 namespace rp::curtis
 {
@@ -60,7 +60,8 @@ namespace rp::curtis
 
     void PluginProcessor::prepareToPlay(double sampleRate, int blockSize)
     {
-        engineManager_ = std::make_unique<EngineManager>(sampleRate, static_cast<size_t>(blockSize));
+        const auto ratio = static_cast<size_t>(sampleRate / 44100.0);
+        engineManager_ = std::make_unique<EngineManager>(sampleRate, static_cast<size_t>(blockSize), ratio * Consts::visualizerCacheBaseSize);
         stateSync_ = std::make_unique<StateSync>(apvts_, *engineManager_);
     }
 
@@ -120,6 +121,11 @@ namespace rp::curtis
     const juce::String PluginProcessor::getProgramName(int index ){ return presetManager_.getName(index);}
     void PluginProcessor::changeProgramName(int , const juce::String&){}
     void PluginProcessor::releaseResources(){}
+
+    const std::vector<VisualizationDataSet>& PluginProcessor::getVisualizationDataSets()
+    {
+        return engineManager_->getVisualizationDataSets();
+    }
 }
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

@@ -31,10 +31,15 @@ namespace rp::curtis
         void paint(juce::Graphics& g) override;
 
     private:
+        void updateData(const std::vector<VisualizationDataSet>& visualizationDataSets);
+
+        void renderLine(Waveform& waveform, float yTranslate, float yScale, const std::array<float, 4>& color);
+
+        void renderSegment();
+
         void resized() override;
 
         IVisualizationDataProvider& visualizationDataProvider_;
-        VisualizationData visualizationData_;
         juce::OpenGLContext openGLContext_;
 
         std::unique_ptr<juce::OpenGLShaderProgram> shader_;
@@ -46,9 +51,11 @@ namespace rp::curtis
         std::unique_ptr<Attributes> attributes_;
         std::unique_ptr<Uniforms> uniforms_;
 
+        const std::array<float, 4> whiteColor_;
         const std::array<float, 4> foreGroundColor_;
         const std::array<float, 4> backGroundColor_;
         const std::array<float, 4> highlightColor_;
+        std::vector<bool> segments_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Visualizer)
     };

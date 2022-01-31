@@ -10,47 +10,56 @@ namespace rp::curtis
 
     void PresetManager::apply(int index)
     {
-//        currentSelection_ = static_cast<size_t>(index);
-//        const auto& selectedPreset = presets[currentSelection_];
-//
-//        auto skipParameter = apvts_.getParameter("SKIP");
-//        skipParameter->setValueNotifyingHost(skipParameter->convertTo0to1(static_cast<float>(selectedPreset.skip)));
-//
-//        auto minLengthParameter = apvts_.getParameter("MIN_LENGTH");
-//        minLengthParameter->setValueNotifyingHost(minLengthParameter->convertTo0to1(selectedPreset.minLength));
-//
-//        auto harmonic1Parameter = apvts_.getParameter("HARMONIC1");
-//        harmonic1Parameter->setValueNotifyingHost(harmonic1Parameter->convertTo0to1(selectedPreset.harmonic1));
-//
-//        auto harmonic2Parameter = apvts_.getParameter("HARMONIC2");
-//        harmonic2Parameter->setValueNotifyingHost(harmonic2Parameter->convertTo0to1(selectedPreset.harmonic2));
-//
-//        auto harmonic3Parameter = apvts_.getParameter("HARMONIC3");
-//        harmonic3Parameter->setValueNotifyingHost(harmonic3Parameter->convertTo0to1(selectedPreset.harmonic3));
-//
-//        auto harmonic4Parameter = apvts_.getParameter("HARMONIC4");
-//        harmonic4Parameter->setValueNotifyingHost(harmonic4Parameter->convertTo0to1(selectedPreset.harmonic4));
-//
-//        auto harmonic5Parameter = apvts_.getParameter("HARMONIC5");
-//        harmonic5Parameter->setValueNotifyingHost(harmonic5Parameter->convertTo0to1(selectedPreset.harmonic5));
-//
-//        auto dutyCycleParameter = apvts_.getParameter("DUTY_CYCLE");
-//        dutyCycleParameter->setValueNotifyingHost(dutyCycleParameter->convertTo0to1(selectedPreset.dutyCycle));
-//
-//        auto thresholdParameter = apvts_.getParameter("THRESHOLD");
-//        thresholdParameter->setValueNotifyingHost(thresholdParameter->convertTo0to1(selectedPreset.threshold));
-//
-//        auto boostParameter = apvts_.getParameter("BOOST");
-//        boostParameter->setValueNotifyingHost(boostParameter->convertTo0to1(selectedPreset.boost));
-//
-//        auto gateParameter = apvts_.getParameter("GATE");
-//        gateParameter->setValueNotifyingHost(gateParameter->convertTo0to1(selectedPreset.gate));
-//
-//        auto dryParameter = apvts_.getParameter("DRY");
-//        dryParameter->setValueNotifyingHost(dryParameter->convertTo0to1(selectedPreset.dry));
-//
-//        auto wetParameter = apvts_.getParameter("WET");
-//        wetParameter->setValueNotifyingHost(wetParameter->convertTo0to1(selectedPreset.wet));
+        currentSelection_ = static_cast<size_t>(index);
+        const auto& selectedPreset = presets[currentSelection_];
+
+        auto inputMixParameter = apvts_.getParameter("INPUT_MIX");
+        inputMixParameter->setValueNotifyingHost(inputMixParameter->convertTo0to1(static_cast<float>(selectedPreset.inputMix)));
+
+        auto segmentMinParameter = apvts_.getParameter("SEGMENT_MIN");
+        segmentMinParameter->setValueNotifyingHost(segmentMinParameter->convertTo0to1(selectedPreset.segmentMin));
+
+        auto repeatParameter = apvts_.getParameter("REPEAT");
+        repeatParameter->setValueNotifyingHost(repeatParameter->convertTo0to1(static_cast<float>(selectedPreset.repeat)));
+
+        auto randomParameter = apvts_.getParameter("RANDOM");
+        randomParameter->setValueNotifyingHost(randomParameter->convertTo0to1(static_cast<float>(selectedPreset.random)));
+
+        auto densityParameter = apvts_.getParameter("DENSITY");
+        densityParameter->setValueNotifyingHost(densityParameter->convertTo0to1(static_cast<float>(selectedPreset.density)));
+
+        auto glissonParameter = apvts_.getParameter("GLISSON");
+        glissonParameter->setValueNotifyingHost(glissonParameter->convertTo0to1(selectedPreset.glisson));
+
+        auto startPitchAParameter = apvts_.getParameter("START_PITCH_A");
+        startPitchAParameter->setValueNotifyingHost(startPitchAParameter->convertTo0to1(selectedPreset.startPitchA));
+
+        auto startPitchBarameter = apvts_.getParameter("START_PITCH_B");
+        startPitchBarameter->setValueNotifyingHost(startPitchBarameter->convertTo0to1(selectedPreset.startPitchB));
+
+        auto endPitchAParameter = apvts_.getParameter("END_PITCH_A");
+        endPitchAParameter->setValueNotifyingHost(endPitchAParameter->convertTo0to1(selectedPreset.endPitchA));
+
+        auto endPitchBParameter = apvts_.getParameter("END_PITCH_B");
+        endPitchBParameter->setValueNotifyingHost(endPitchBParameter->convertTo0to1(selectedPreset.endPitchB));
+
+        auto startPositionAParameter = apvts_.getParameter("START_POSITION_A");
+        startPositionAParameter->setValueNotifyingHost(startPositionAParameter->convertTo0to1(selectedPreset.startPositionA));
+
+        auto startPositionBParameter = apvts_.getParameter("START_POSITION_B");
+        startPositionBParameter->setValueNotifyingHost(startPositionBParameter->convertTo0to1(selectedPreset.startPositionB));
+
+        auto endPositionAParameter = apvts_.getParameter("END_POSITION_A");
+        endPositionAParameter->setValueNotifyingHost(endPositionAParameter->convertTo0to1(selectedPreset.endPositionA));
+
+        auto endPositionBParameter = apvts_.getParameter("END_POSITION_B");
+        endPositionBParameter->setValueNotifyingHost(endPositionBParameter->convertTo0to1(selectedPreset.endPositionB));
+
+        auto dryParameter = apvts_.getParameter("DRY");
+        dryParameter->setValueNotifyingHost(dryParameter->convertTo0to1(selectedPreset.dry));
+
+        auto wetParameter = apvts_.getParameter("WET");
+        wetParameter->setValueNotifyingHost(wetParameter->convertTo0to1(selectedPreset.wet));
     }
 
     const std::string& PresetManager::getName(int index)

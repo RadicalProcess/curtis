@@ -26,10 +26,11 @@ namespace rp::curtis
 
     Visualizer::Visualizer(IVisualizationDataProvider& visualizationDataProvider)
     : visualizationDataProvider_(visualizationDataProvider)
-    , visualizationData_(Constants::visualDataSize)
+    , whiteColor_({1.0f, 1.0f, 1.0f, 1.0f})
     , foreGroundColor_({foreground.getFloatRed(), foreground.getFloatGreen(), foreground.getFloatBlue(), 1.0f})
     , backGroundColor_({background.getFloatRed(), background.getFloatGreen(), background.getFloatBlue(), 1.0f})
     , highlightColor_({highlight.getFloatRed(), highlight.getFloatGreen(), highlight.getFloatBlue(), 1.0f})
+    , segments_(Constants::visualDataSize, false)
     {
     }
 
@@ -65,75 +66,72 @@ namespace rp::curtis
         using namespace ::juce::gl;
         jassert (OpenGLHelpers::isContextActive());
 
-        visualizationData_ = visualizationDataProvider_.getVisualizationData();
-
         auto desktopScale = (float) openGLContext.getRenderingScale();
         OpenGLHelpers::clear(juce::Colours::black);
 
         glViewport(0, 0, roundToInt (desktopScale * (float) getWidth()), roundToInt (desktopScale * (float) getHeight()));
-
         glLineWidth(3.0f);
         shader_->use();
 
-        pitch_->bind();
-        pitch_->update(visualizationData_.pitch);
-        attributes_->enable();
-        uniforms_->get("yTranslate").set(0.0f);
-        uniforms_->get("yScale").set(1.0f);
-        uniforms_->get("lineColor").set(1.0f , 1.0f, 1.0f, 1.0f);
-        glDrawArrays(GL_LINE_STRIP, 0, pitch_->getNumVertices());
-        attributes_->disable();
+        updateData(visualizationDataProvider_.getVisualizationDataSets());
 
+        glLineWidth(1.0f);
+        renderLine(*waveLeft_, 0.5f, 0.5f, whiteColor_);
+        renderLine(*waveRight_, -0.5f, 0.5f, whiteColor_);
         glLineWidth(2.0f);
-        pan_->bind();
-        pan_->update(visualizationData_.pan);
-        attributes_->enable();
-        uniforms_->get("yTranslate").set(0.0f);
-        uniforms_->get("yScale").set(1.0f);
-        uniforms_->get("lineColor").set(foreGroundColor_[0], foreGroundColor_[1], foreGroundColor_[2], 1.0f);
-        glDrawArrays(GL_LINE_STRIP, 0, pan_->getNumVertices());
-        attributes_->disable();
-
-        glLineWidth(2.0f);
-        waveLeft_->bind();
-        waveLeft_->update(visualizationData_.waveLeft);
-        attributes_->enable();
-        uniforms_->get("yTranslate").set(0.5f);
-        uniforms_->get("yScale").set(0.5f);
-        uniforms_->get("lineColor").set(backGroundColor_[0], backGroundColor_[1], backGroundColor_[2], 1.0f);
-        glDrawArrays(GL_LINE_STRIP, 0, waveLeft_->getNumVertices());
-        attributes_->disable();
-
-        glLineWidth(2.0f);
-        waveRight_->bind();
-        waveRight_->update(visualizationData_.waveRight);
-        attributes_->enable();
-        uniforms_->get("yTranslate").set(-0.5f);
-        uniforms_->get("yScale").set(0.5f);
-        uniforms_->get("lineColor").set(backGroundColor_[0], backGroundColor_[1], backGroundColor_[2], 1.0f);
-        glDrawArrays(GL_LINE_STRIP, 0, waveRight_->getNumVertices());
-        attributes_->disable();
+        renderLine(*pitch_, 0.0f, 1.0f, foreGroundColor_);
+        glLineWidth(3.0f);
+        renderLine(*pan_, 0.0f, 1.0f, backGroundColor_);
 
         glBindBuffer (GL_ARRAY_BUFFER, 0);
         glUseProgram(0);
 
-        glLineWidth(1.0f);
-        glColor4f(highlightColor_[0], highlightColor_[1], highlightColor_[2], 1.0f);
-        const auto halfSize = Constants::visualDataSize / 2;
-        auto* ptr = visualizationData_.segment.getReadPtr();
-        for(auto i = 0; i < visualizationData_.segment.size(); i++)
-        {
-            if(ptr[i] == 0.0f)
-                continue;
-            drawVerticalLine(static_cast<float>(i) / static_cast<float>(halfSize) - 1.0f);
-        }
+        renderSegment();
         attributes_->disable();
     }
 
+    void Visualizer::updateData(const std::vector<VisualizationDataSet>& visualizationDataSets)
+    {
+        auto& pitchPosition = pitch_->getPosition();
+        auto& panPosition = pan_->getPosition();
+        auto& waveLeftPosition = waveLeft_->getPosition();
+        auto& waveRightPosition = waveRight_->getPosition();
+
+        for(auto i = static_cast<size_t>(0); i < visualizationDataSets.size(); ++i)
+        {
+            pitchPosition[i][1] = visualizationDataSets[i].pitch;
+            panPosition[i][1] = visualizationDataSets[i].pan;
+            waveLeftPosition[i][1] = visualizationDataSets[i].sampleL;
+            waveRightPosition[i][1] = visualizationDataSets[i].sampleR;
+            segments_[i] = visualizationDataSets[i].segment;
+        }
+    }
+
+    void Visualizer::renderLine(Waveform& waveform, float yTranslate, float yScale, const std::array<float, 4>& color)
+    {
+        waveform.bind();
+        waveform.update();
+        attributes_->enable();
+        uniforms_->get("yTranslate").set(yTranslate);
+        uniforms_->get("yScale").set(yScale);
+        uniforms_->get("lineColor").set(color[0], color[1], color[2], color[3]);
+        glDrawArrays(GL_LINE_STRIP, 0, waveform.getNumVertices());
+        attributes_->disable();
+    }
+
+    void Visualizer::renderSegment()
+    {
+        glLineWidth(1.0f);
+        glColor4f(highlightColor_[0], highlightColor_[1], highlightColor_[2], 1.0f);
+        const auto halfSize = Constants::visualDataSize / 2;
+        for(auto i = 0; i < segments_.size(); i++)
+        {
+            if(segments_[i])
+                drawVerticalLine(static_cast<float>(i) / static_cast<float>(halfSize) - 1.0f);
+        }
+    }
 
     void Visualizer::paint(Graphics&)
     {
     }
-
-
 }

@@ -9,7 +9,7 @@ namespace rp::curtis
         apvts_.addParameterListener("GLISSON", this);
         button_.addListener(this);
 
-        button_.setToggleState(apvts_.getParameter("GLOSSON")->getValue() > 0.0f, juce::NotificationType::dontSendNotification);
+        button_.setToggleState(apvts_.getParameter("GLISSON")->getValue() > 0.0f, juce::NotificationType::dontSendNotification);
 
     }
 

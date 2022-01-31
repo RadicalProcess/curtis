@@ -36,6 +36,7 @@ target_sources(curtis
         source/PresetManager.cpp
         source/ParameterSpecSet.cpp
         source/Preset.cpp
+        source/VisualizationDataCompressor.cpp
         )
 
 target_compile_definitions(curtis
@@ -48,6 +49,7 @@ target_link_libraries(curtis
     PRIVATE
         juce::juce_audio_utils
         rp::UICore
+        rp::Visualizer
         boost::lockfree
     PUBLIC
         juce::juce_recommended_config_flags

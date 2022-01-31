@@ -11,11 +11,13 @@ namespace rp::curtis
     public:
         Waveform(size_t size);
 
-        void update(const Buffer& buffer);
+        void update();
 
         void bind();
 
        GLsizei getNumVertices() const;
+
+       std::vector<Position>& getPosition();
 
     private:
         std::vector<Position> positions_;

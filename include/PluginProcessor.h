@@ -5,14 +5,15 @@
 #include <thread>
 
 #include <juce_audio_processors/juce_audio_processors.h>
+#include <curtis_core/IVisualizationDataProvider.h>
 
 #include "EngineManager.h"
 #include "StateSync.h"
 #include "PresetManager.h"
-
 namespace rp::curtis
 {
     class PluginProcessor : public juce::AudioProcessor
+                          , public IVisualizationDataProvider
     {
     public:
         PluginProcessor();
@@ -39,6 +40,8 @@ namespace rp::curtis
         void getStateInformation(juce::MemoryBlock& destData) override;
         void setStateInformation(const void* data, int sizeInBytes) override;
         juce::AudioProcessorValueTreeState& getAudioProcessorValueTreeState();
+
+        const std::vector<VisualizationDataSet>& getVisualizationDataSets() override;
 
     private:
         juce::AudioProcessorValueTreeState apvts_;

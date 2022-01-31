@@ -11,9 +11,9 @@ namespace rp::curtis::visualizer_test
 
         ~DummyDataProvider() override = default;
 
-        const VisualizationData& getVisualizationData() override;
+        const std::vector<VisualizationDataSet>& getVisualizationDataSets() override;
 
     private:
-        VisualizationData data_;
+        std::vector<VisualizationDataSet> visualizationDataSets_;
     };
 }

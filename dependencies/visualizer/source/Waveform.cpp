@@ -21,12 +21,8 @@ namespace rp::curtis
     {
     }
 
-    void Waveform::update(const Buffer& buffer)
+    void Waveform::update()
     {
-        auto* ptr = buffer.getReadPtr();
-        for(auto i = static_cast<size_t>(0); i < 512; i++)
-            positions_[i][1] = ptr[i];
-
         vbo_.update(positions_);
     }
 
@@ -38,5 +34,10 @@ namespace rp::curtis
     GLsizei Waveform::getNumVertices() const
     {
         return static_cast<GLsizei>(positions_.size());
+    }
+
+    std::vector<Position>& Waveform::getPosition()
+    {
+        return positions_;
     }
 }
