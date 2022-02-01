@@ -36,7 +36,7 @@ jobs:
         run: cmake -G "Visual Studio 16 2019" -A x64 -B ${{github.workspace}}/build -DCMAKE_CONFIGURATION_TYPES=Release -DPRODUCT_VERSION="${{env.VERSION}}"
 
       - name: Build
-        run: cmake --build ${{github.workspace}}/build --target trevor_All EngineTestHost --config Release
+        run: cmake --build ${{github.workspace}}/build --target curtis_All EngineTestHost --config Release
 
       - name: Upload Plugins
         uses: actions/upload-artifact@v2
