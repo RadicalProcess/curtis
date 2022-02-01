@@ -36,7 +36,7 @@ jobs:
         run: cmake -G "Visual Studio 16 2019" -A x64 -B ${{github.workspace}}/build -DCMAKE_CONFIGURATION_TYPES=Release -DPRODUCT_VERSION="${{env.VERSION}}"
 
       - name: Build
-        run: cmake --build ${{github.workspace}}/build --target curtis_All EngineTestHost --config Release
+        run: cmake --build ${{github.workspace}}/build --target curtis_All CurtisCoreTestHost --config Release
 
       - name: Upload Plugins
         uses: actions/upload-artifact@v2
@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test_executables
-          path: bin/**/EngineTestHost*
+          path: bin/**/CurtisCoreTestHost*
 
   test_mac:
     needs: build
@@ -68,8 +68,8 @@ jobs:
       - name: Run Test
         working-directory: Mac
         run: |
-          chmod 755 EngineTestHost
-          ./EngineTestHost
+          chmod 755 CurtisCoreTestHost
+          ./CurtisCoreTestHost
   sign_and_notarize_mac:
     name: Sign and Notarize
     runs-on: macos-10.15
@@ -172,7 +172,7 @@ jobs:
 
       - name: Run Test
         working-directory: Win
-        run: Start-Process -FilePath "EngineTestHost.exe"
+        run: Start-Process -FilePath "CurtisCoreTestHost.exe"
 
   setup-win:
     name: Setup Win
