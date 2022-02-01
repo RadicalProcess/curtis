@@ -9,21 +9,21 @@
 
     <Fragment>
         <DirectoryRef Id="DIR_VST3">
-            <Component Id="COMP_TREVOR_VST3" Win64="yes" Guid="E423DCE0-DD4B-4458-B967-B08093BE82DB">
-                <File Id="FILE_TREVOR_VST3" Name="trevor.vst3" KeyPath="yes" Checksum="yes" Source="..\..\..\bin\Win\trevor.vst3"/>
-                <RemoveFile Id="REMOVEFILE_TREVOR_VST3" Name="trevor.vst3" On="both" />
+            <Component Id="COMP_CURTIS_VST3" Win64="yes" Guid="E423DCE0-DD4B-4458-B967-B08093BE82DB">
+                <File Id="FILE_CURTIS_VST3" Name="curtis.vst3" KeyPath="yes" Checksum="yes" Source="..\..\..\bin\Win\curtis.vst3"/>
+                <RemoveFile Id="REMOVEFILE_CURTIS_VST3" Name="curtis.vst3" On="both" />
             </Component>
         </DirectoryRef>
     </Fragment>
 
     <Fragment>
         <Feature Id="FEATURE_VST3"
-                 Title="TREVOR VST3"
+                 Title="CURTIS VST3"
                  Level="1"
                  AllowAdvertise="no"
                  ConfigurableDirectory="DIR_VST3"
                  Description="TERVOR VST3 (64Bit)">
-            <ComponentRef Id="COMP_TREVOR_VST3" />
+            <ComponentRef Id="COMP_CURTIS_VST3" />
         </Feature>
     </Fragment>
 

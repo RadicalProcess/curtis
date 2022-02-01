@@ -1,0 +1,221 @@
+name: Curtis Release Build
+on:
+  push:
+    branches:
+      - 'release*'
+      - main
+      - develop
+      - 'test*'
+env:
+  VERSION: 1.0.0
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-10.15, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install Ninja
+        if: ${{ matrix.os == 'macos-10.15'}}
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Configure Cmake Mac
+        if: ${{ matrix.os == 'macos-10.15'}}
+        run: cmake -G Ninja -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DPRODUCT_VERSION="${{env.VERSION}}"
+
+      - name: Configure Cmake Windows
+        if: ${{ matrix.os == 'windows-latest'}}
+        run: cmake -G "Visual Studio 16 2019" -A x64 -B ${{github.workspace}}/build -DCMAKE_CONFIGURATION_TYPES=Release -DPRODUCT_VERSION="${{env.VERSION}}"
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --target trevor_All EngineTestHost --config Release
+
+      - name: Upload Plugins
+        uses: actions/upload-artifact@v2
+        with:
+          name: unsigned_plugins
+          path: bin/**/curtis.*
+
+      - name: Upload Test executables
+        uses: actions/upload-artifact@v2
+        with:
+          name: test_executables
+          path: bin/**/EngineTestHost*
+
+  test_mac:
+    needs: build
+    name: Run unit tests
+    runs-on: macos-10.15
+
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v2
+        with:
+          name: test_executables
+          path: ${{github.workspace}}
+
+      - name: Display contents of downloaded artifacts
+        run: ls -Rl
+
+      - name: Run Test
+        working-directory: Mac
+        run: |
+          chmod 755 EngineTestHost
+          ./EngineTestHost
+  sign_and_notarize_mac:
+    name: Sign and Notarize
+    runs-on: macos-10.15
+    needs: test_mac
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v2
+        with:
+          name: unsigned_plugins
+          path: ${{github.workspace}}/bin
+
+      - name: Display contents of downloaded artifacts
+        run: ls -Rl
+
+      - uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
+          p12-password: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+
+      - name: Sign plugins
+        run: |
+          /usr/bin/codesign --force -s "${{ secrets.DEVELOPER_ID_APPLICATION }}" ${{github.workspace}}/bin/Mac/curtis.vst3 -v
+          /usr/bin/codesign --force -s "${{ secrets.DEVELOPER_ID_APPLICATION }}" ${{github.workspace}}/bin/Mac/curtis.component -v
+      - name: Notarize VST3
+        uses: devbotsxyz/xcode-notarize@v1
+        with:
+          product-path: ${{github.workspace}}/bin/Mac/curtis.vst3
+          appstore-connect-username: ${{ secrets.NOTARIZATION_USERNAME }}
+          appstore-connect-password: ${{ secrets.NOTARIZATION_PASSWORD }}
+
+      - name: Staple VST3
+        uses: devbotsxyz/xcode-staple@v1
+        with:
+          product-path: ${{github.workspace}}/bin/Mac/curtis.vst3
+
+      - name: Notarize AU
+        uses: devbotsxyz/xcode-notarize@v1
+        with:
+          product-path: ${{github.workspace}}/bin/Mac/curtis.component
+          appstore-connect-username: ${{ secrets.NOTARIZATION_USERNAME }}
+          appstore-connect-password: ${{ secrets.NOTARIZATION_PASSWORD }}
+
+      - name: Staple AU
+        uses: devbotsxyz/xcode-staple@v1
+        with:
+          product-path: ${{github.workspace}}/bin/Mac/curtis.component
+
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: signed-plugins-mac
+          path: ${{github.workspace}}/bin/Mac/curtis.*
+
+  setup-mac:
+    name: Setup Mac
+    runs-on: macos-10.15
+    needs: sign_and_notarize_mac
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download
+        uses: actions/download-artifact@v2
+        with:
+          name: signed-plugins-mac
+          path: ${{github.workspace}}/bin/Mac
+
+      - name: Import Certificats
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.MACOS_INSTALLER_CERTIFICATE }}
+          p12-password: ${{ secrets.MACOS_INSTALLER_CERTIFICATE_PWD }}
+
+      - name: Create Installer
+        run: |
+          mkdir -p bin/mac/packages
+          echo "Creating  installer... "
+          pkgbuild --version ${{env.VERSION}} --component "bin/Mac/curtis.vst3" --identifier "com.radical-process.curtisVst3"  --install-location "/Library/Audio/Plug-Ins/VST3" bin/Mac/packages/curtisVst3.pkg
+          pkgbuild --version ${{env.VERSION}} --component "bin/Mac/curtis.component" --identifier "com.radical-process.curtisAU" --install-location "/Library/Audio/Plug-Ins/Components" bin/Mac/packages/curtisAU.pkg
+          productBuild --distribution "setup/Mac/distribution.plist" --version "$version" --package-path bin/Mac/packages --resources "setup/Mac/resources" bin/Mac/curtis_unsigned.pkg
+          echo "Sign installer"
+          productsign --sign "${{ secrets.DEVELOPER_ID_INSTALLER }}" bin/Mac/curtis_unsigned.pkg bin/Mac/curtis.pkg
+          rm -rf bin/mac/packages
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: curtis-mac
+          path: ${{github.workspace}}/bin/Mac/curtis.pkg
+
+  test_win:
+    needs: build
+    name: Run unit tests
+    runs-on: windows-latest
+
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v2
+        with:
+          name: test_executables
+
+      - name: Run Test
+        working-directory: Win
+        run: Start-Process -FilePath "EngineTestHost.exe"
+
+  setup-win:
+    name: Setup Win
+    runs-on: windows-latest
+    needs: test_win
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download
+        uses: actions/download-artifact@v2
+        with:
+          name: unsigned_plugins
+          path: ${{github.workspace}}/bin
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Create Installer
+        run: msbuild  ${{github.workspace}}\setup\Win\Installer.sln /p:Configuration='Release' /p:Platform='x86'
+
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: curtis-win
+          path: ${{github.workspace}}/bin/Win/curtis.msi
+
+  add-documents-to-packages:
+    name: Adding documents to packages
+    needs: [test_mac, test_win]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Archive Documents in Win package
+        uses: actions/upload-artifact@v2
+        with:
+          name: curtis-win
+          path: docs
+
+      - name: Archive Documents in Mac package
+        uses: actions/upload-artifact@v2
+        with:
+          name: curtis-mac
+          path: docs

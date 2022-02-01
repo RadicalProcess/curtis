@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>c35fb996-e987-4ec9-b02a-4cc73b66d708</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>trevor</OutputName>
+    <OutputName>curtis</OutputName>
     <OutputType>Package</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -20,7 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
-    <Compile Include="trevorVST3.wxs" />
+    <Compile Include="curtisVST3.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUIExtension">

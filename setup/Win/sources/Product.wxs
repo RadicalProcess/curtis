@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="trevor" Language="1033" Version="1.1.0" Manufacturer="Radical Process" UpgradeCode="1cdff30f-8e33-469b-a075-e95638dae1aa">
+	<Product Id="*" Name="curtis" Language="1033" Version="1.1.0" Manufacturer="Radical Process" UpgradeCode="1cdff30f-8e33-469b-a075-e95638dae1aa">
 		<Package Id='*' Keywords='Installer' Description="Plugin Installer" InstallerVersion="301" Compressed="yes" Platform="x64" InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of trevor is already installed." />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of curtis is already installed." />
 		<MediaTemplate EmbedCab="yes"/>
 
         <UIRef Id="WixUI_Mondo" />
@@ -28,7 +28,7 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="trevor" />
+				<Directory Id="INSTALLFOLDER" Name="curtis" />
 			</Directory>
 		</Directory>
 	</Fragment>
