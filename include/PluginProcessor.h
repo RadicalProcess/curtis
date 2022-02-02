@@ -10,6 +10,9 @@
 #include "EngineManager.h"
 #include "StateSync.h"
 #include "PresetManager.h"
+#include "Validator.h"
+
+
 namespace rp::curtis
 {
     class PluginProcessor : public juce::AudioProcessor
@@ -48,6 +51,7 @@ namespace rp::curtis
         PresetManager presetManager_;
         ParameterSyncPtr stateSync_;
         std::unique_ptr<EngineManager>  engineManager_;
+        std::unique_ptr<Validator> validator_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginProcessor)
     };

@@ -13,8 +13,8 @@ namespace rp::curtis
         Preset{"granpa", -100.f, 10.f, 0, 0, 100, true, -13.0f, -11.0f, -13.0f, -11.0f, -0.1f, 0.1f, -0.05f, 0.05f, -10.f, 0.f},
         Preset{"retro shooter", -100.f, 30.f, 0, 5, 100, true, 12.f, 24.f, -24.0f, -12.0f, -1.f, 1.f, -1.f, 1.f, -80.f, 0.f},
         Preset{"chatter", -100.f, 250.f, 0, 10, 100, true, -24.f, 24.f, 24.0f, 24.0f, -1.f, 1.f, -1.f, 1.f, -80.f, 0.f},
-        Preset{"time travel", -100.f, 500.f, 0, 30, 100, true, -24.f, 0.0f, 0.0f, 24.0f, 0.f, 0.f, -1.f, 1.f, -80.f, 0.f},
-        Preset{"vader", -100.f, 10.f, 0, 30, 100, false, -24.f, -24.f, -24.f, -24.f, 0.f, 0.f, 0.f, 0.f, -8.f, 0.f},
-        Preset{"max glisson", -100.f, 5.f, 0, 0, 100, true, -24.f, 24.f, -24.f, 24.f, -1.f, 1.f, -1.f, 1.f, -80.f, 0.f}
+        Preset{"machine gun", -100.f, 30.f, 10, 0, 100, false, -24.f, 24.0f, 0.0f, 0.0f, -0.3f, 0.3f, 0.f, 0.f, -10.f, 0.f},
+        Preset{"vader", -100.f, 10.f, 0, 0, 100, false, -24.f, -24.f, -24.f, -24.f, 0.f, 0.f, 0.f, 0.f, -8.f, 0.f},
+        Preset{"max glisson", -100.f, 5.f, 0, 0, 100, true, -24.f, 24.f, -24.f, 24.f, -1.f, 1.f, -1.f, 1.f, -10.f, 0.f}
     };
 }

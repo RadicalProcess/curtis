@@ -5,6 +5,7 @@
 #include "PluginEditor.h"
 #include "StateSync.h"
 #include "Consts.h"
+#include "Validator.h"
 
 namespace rp::curtis
 {
@@ -60,6 +61,7 @@ namespace rp::curtis
 
     void PluginProcessor::prepareToPlay(double sampleRate, int blockSize)
     {
+        validator_ = std::make_unique<Validator>(sampleRate);
         const auto ratio = static_cast<size_t>(sampleRate / 44100.0);
         engineManager_ = std::make_unique<EngineManager>(sampleRate, static_cast<size_t>(blockSize), ratio * Consts::visualizerCacheBaseSize);
         stateSync_ = std::make_unique<StateSync>(apvts_, *engineManager_);
@@ -76,6 +78,11 @@ namespace rp::curtis
 
     void PluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& )
     {
+        if(!validator_->isValid())
+        {
+            buffer.clear();
+            return;
+        }
         engineManager_->process(buffer.getArrayOfWritePointers(), static_cast<size_t>(buffer.getNumSamples()));
     }
 

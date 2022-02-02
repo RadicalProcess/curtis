@@ -29,6 +29,9 @@ namespace rp::curtis
     , repeatLabel_("REPEAT", getParameterSpec("REPEAT").name.data())
     , repeatSlider_("REPEAT", 0, 10)
     , repeatSliderAttachment_(apvts_, getParameterSpec("REPEAT").id.data(), repeatSlider_)
+    , densityLabel_("DENSITY", getParameterSpec("DENSITY").name.data())
+    , densitySlider_("DENSITY", 0)
+    , densitySliderAttachment_(apvts_, getParameterSpec("DENSITY").id.data(), densitySlider_)
     , dryLabel_("DRY_LABEL", getParameterSpec("DRY").name.data())
     , drySlider_("DRY_SLIDER", 0, getParameterSpec("DRY").unit.data())
     , drySliderAttachment_(apvts_, getParameterSpec("DRY").id.data(), drySlider_)
@@ -36,9 +39,9 @@ namespace rp::curtis
     , wetSlider_("WET_SLIDER", 0, getParameterSpec("WET").unit.data())
     , wetSliderAttachment_(apvts_, getParameterSpec("WET").id.data(), wetSlider_)
     {
-        setSize(648, 215);
+        setSize(733, 215);
         {
-            visualizer_.setBounds(0, 0, 648, 100);
+            visualizer_.setBounds(0, 0, 733, 100);
             addAndMakeVisible(visualizer_);
         }
 
@@ -83,18 +86,25 @@ namespace rp::curtis
         }
 
         {
-            dryLabel_.setBounds(475, 102, 75, 20);
+            densityLabel_.setBounds(475, 102, 75, 20);
+            addAndMakeVisible(densityLabel_);
+            densitySlider_.setBounds(475, 125, 75, 80);
+            addAndMakeVisible(densitySlider_);
+        }
+
+        {
+            dryLabel_.setBounds(560, 102, 75, 20);
             addAndMakeVisible(dryLabel_);
             drySlider_.setSkewFactor(3.0f);
-            drySlider_.setBounds(475, 125, 75, 80);
+            drySlider_.setBounds(560, 125, 75, 80);
             drySlider_.setRange(getParameterSpec("DRY").min, getParameterSpec("DRY").max);
             addAndMakeVisible(drySlider_);
         }
 
         {
-            wetLabel_.setBounds(560, 102, 75, 20);
+            wetLabel_.setBounds(645, 102, 75, 20);
             addAndMakeVisible(wetLabel_);
-            wetSlider_.setBounds(560, 125, 75, 80);
+            wetSlider_.setBounds(645, 125, 75, 80);
             wetSlider_.setSkewFactor(3.0f);
             wetSlider_.setRange(getParameterSpec("WET").min, getParameterSpec("WET").max);
             addAndMakeVisible(wetSlider_);

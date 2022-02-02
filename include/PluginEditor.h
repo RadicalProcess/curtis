@@ -52,6 +52,10 @@ namespace rp::curtis
         uicore::StepSlider repeatSlider_;
         const juce::AudioProcessorValueTreeState::SliderAttachment repeatSliderAttachment_;
 
+        uicore::Label densityLabel_;
+        uicore::StandardRotarySlider densitySlider_;
+        const juce::AudioProcessorValueTreeState::SliderAttachment densitySliderAttachment_;
+
         uicore::Label dryLabel_;
         uicore::DecibelRotarySlider drySlider_;
         const juce::AudioProcessorValueTreeState::SliderAttachment drySliderAttachment_;
