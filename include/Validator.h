@@ -6,7 +6,7 @@ namespace rp::curtis
     {
     public:
         Validator(float sampleRate)
-        : validity_(sampleRate > 44100.0f)
+        : validity_(sampleRate >= 44100.0f)
         {
         }
 
