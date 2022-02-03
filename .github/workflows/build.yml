@@ -93,6 +93,7 @@ jobs:
         run: |
           /usr/bin/codesign --force -s "${{ secrets.DEVELOPER_ID_APPLICATION }}" ${{github.workspace}}/bin/Mac/curtis.vst3 -v
           /usr/bin/codesign --force -s "${{ secrets.DEVELOPER_ID_APPLICATION }}" ${{github.workspace}}/bin/Mac/curtis.component -v
+
       - name: Notarize VST3
         uses: devbotsxyz/xcode-notarize@v1
         with:
@@ -109,8 +110,8 @@ jobs:
         uses: devbotsxyz/xcode-notarize@v1
         with:
           product-path: ${{github.workspace}}/bin/Mac/curtis.component
-          appstore-connect-username: ${{ secrets.NOTARIZATION_USERNAME }}
-          appstore-connect-password: ${{ secrets.NOTARIZATION_PASSWORD }}
+          appstore-connect-username: ${{ secrets.APPLE_STORE_CONNECT_USERNAME}}
+          appstore-connect-password: ${{ secrets.APPLE_STORE_CONNECT_PWD }}
 
       - name: Staple AU
         uses: devbotsxyz/xcode-staple@v1
@@ -219,3 +220,4 @@ jobs:
         with:
           name: curtis-mac
           path: docs
+1
