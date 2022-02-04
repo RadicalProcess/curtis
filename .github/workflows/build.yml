@@ -98,8 +98,8 @@ jobs:
         uses: devbotsxyz/xcode-notarize@v1
         with:
           product-path: ${{github.workspace}}/bin/Mac/curtis.vst3
-          appstore-connect-username: ${{ secrets.NOTARIZATION_USERNAME }}
-          appstore-connect-password: ${{ secrets.NOTARIZATION_PASSWORD }}
+          appstore-connect-username: ${{ secrets.APPLE_STORE_CONNECT_USERNAME }}
+          appstore-connect-password: ${{ secrets.APPLE_STORE_CONNECT_PWD }}
 
       - name: Staple VST3
         uses: devbotsxyz/xcode-staple@v1
