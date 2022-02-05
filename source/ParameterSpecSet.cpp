@@ -6,7 +6,7 @@ namespace rp::curtis
     const std::vector<ParameterSpec> parameterSpecSet{
             ParameterSpec{"input", "INPUT_MIX", "", ParameterSpec::Float, -100.f, 100.f, -100.f,
                           [](Curtis& curtis, float value){ curtis.setMix(value / 100.0f);}},
-            ParameterSpec{"segment min", "SEGMENT_MIN", "ms", ParameterSpec::Float, 5.f, 1000.f, 50.f,
+            ParameterSpec{"segment min", "SEGMENT_MIN", "ms", ParameterSpec::Float, 5.f, 250.f, 50.f,
                           [](Curtis& curtis, float value){ curtis.setSegmentMinLength(value);}},
             ParameterSpec{"repeat", "REPEAT", "", ParameterSpec::Int, 0.f, 10.f, 0.f,
                           [](Curtis& curtis, float count){ curtis.setRepeat(static_cast<size_t>(count));}},

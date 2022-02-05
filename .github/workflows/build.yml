@@ -70,6 +70,7 @@ jobs:
         run: |
           chmod 755 CurtisCoreTestHost
           ./CurtisCoreTestHost
+
   sign_and_notarize_mac:
     name: Sign and Notarize
     runs-on: macos-10.15
